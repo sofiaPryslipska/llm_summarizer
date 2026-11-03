@@ -20,7 +20,7 @@ if st.button("Summarize"):
                 model='gemini-2.5-flash',
                 contents=text,
                 config=types.GenerateContentConfig(
-                    system_instruction='Briefly summarize this text without any greetings and introduction. Only output the result.'
+                    system_instruction='Vey briefly summarize this text without any greetings and introduction. Only output the result.'
                 )
             )
             
