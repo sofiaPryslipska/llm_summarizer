@@ -2,18 +2,17 @@ import streamlit as st
 from google import genai
 from google.genai import types
 
-st.title("Текстовий сумаризатор")
+st.title("Text summarizer")
+st.write("This tool generates a quick and concise summary of any provided text using the Gemini 2.5 Flash model.")
 
-# Поля вводу
-api_key = st.text_input("Введіть Gemini API Key", type="password")
-text = st.text_area("Введіть текст для сумаризації", height=200)
+api_key = st.text_input("Enter your API Key", type="password")
+text = st.text_area("Enter the text", height=200)
 
-# Кнопка запуску
-if st.button("Сумаризувати"):
+if st.button("Summarize"):
     if not api_key:
-        st.error("Помилка: Введіть API key")
+        st.error("Error: Please enter your API key")
     elif not text:
-        st.warning("Помилка: Введіть текст")
+        st.warning("Error: Please enter the text")
     else:
         try:
             client = genai.Client(api_key=api_key)
@@ -21,11 +20,11 @@ if st.button("Сумаризувати"):
                 model='gemini-2.5-flash',
                 contents=text,
                 config=types.GenerateContentConfig(
-                    system_instruction='summarize this text without any greetings and introduction.only the result!'
+                    system_instruction='Briefly summarize this text without any greetings and introduction. Only output the result.'
                 )
             )
-            # Виведення результату
-            st.success("Результат:")
+            
+            st.success("Result:")
             st.write(response.text)
         except Exception as e:
-            st.error(f"Виникла помилка: {str(e)}")
+            st.error(f"An error occurred: {str(e)}")
